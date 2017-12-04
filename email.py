@@ -50,7 +50,7 @@ def emailAnalysis():
 		newlist.append(last)
 
 		for line in newlist:  
-			if ('------=') in line: # break out once you hit the email contents and are done with email headers
+			if line in ['\n','\r\n']: # break out once you hit the email contents and are done with email headers
 				break
 			elif ":" not in line: # don't add lines to the header doct without a :, all headers are [HEADER}: [VALUE]
 				continue

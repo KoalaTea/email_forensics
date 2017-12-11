@@ -33,7 +33,7 @@ def checkValue(header,value):
 	return re.match(pattern,value) # check if value matches regex
 
 def emailAnalysis():
-	print("Input email header file.\n")	
+	print("Input original email file.\n")	
 	filename = input()
 	with open(filename) as f:
 		content = []    
@@ -50,7 +50,7 @@ def emailAnalysis():
 		newlist.append(last)
 
 		for line in newlist:  
-			if ('------=') in line: # break out once you hit the email contents and are done with email headers
+			if line in ['\n','\r\n']: # break out once you hit the email contents and are done with email headers
 				break
 			elif ":" not in line: # don't add lines to the header doct without a :, all headers are [HEADER}: [VALUE]
 				continue
@@ -59,7 +59,7 @@ def emailAnalysis():
 				header = fields[0] # header value          
 				value = fields[1] # value                                                                      #	
 				if header not in valid_email_headers.keys(): # is the header registered with IANA
-					print("Found header not registered with IANA:", header) # it is not
+					print("Found header not registered with IANA:", header,":",value) # it is not
 				else:
 					if not (checkValue(header,value)): # is the value correctly formatted
 						print("Valid header but invalid formatted value:", header,":",value) # it is not
